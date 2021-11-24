@@ -19,6 +19,7 @@ const row = (bill) => {
     `)
   }
 
+  // correction bug 1 !: organisation de dates par ordre croissant
 const rows = (data) => {
   return (data && data.length) ? data.sort((a,b)=>new Date(b.date) - new Date(a.date)).map(bill => row(bill)).join("") : ""
 }
