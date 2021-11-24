@@ -16,10 +16,27 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
   handleChangeFile = e => {
+    let errorMessage = document.querySelector(".error_message")
+
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+    // recommandations de format des docs
+    const formatDocument = ['jpg', 'jpeg', 'png']
+    console.log(file)
+    
     const filePath = e.target.value.split(/\\/g)
+    console.log(filePath)
+   
     const fileName = filePath[filePath.length-1]
-    this.firestore
+    console.log(fileName)
+    
+    let formatOfThisDoc = file.name.split('.').pop(); // exemple : format odt
+    console.log(formatOfThisDoc);
+    
+    const isValidFormat = formatDocument.includes(formatOfThisDoc)
+   
+    if(isValidFormat){
+      errorMessage.style.display = "none"
+      this.firestore
       .storage
       .ref(`justificatifs/${fileName}`)
       .put(file)
@@ -28,6 +45,9 @@ export default class NewBill {
         this.fileUrl = url
         this.fileName = fileName
       })
+    }else{
+      errorMessage.style.display = "block"
+    } 
   }
   handleSubmit = e => {
     e.preventDefault()
