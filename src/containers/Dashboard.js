@@ -145,8 +145,9 @@ export default class {
       this.counter ++
     }
 
+    // modification : ajout de  #status-bills-container${index} pour pouvoir ouvrir plusieur tickets
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      $(`#status-bills-container${index} #open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
 
     return bills
