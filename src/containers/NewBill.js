@@ -19,7 +19,7 @@ export default class NewBill {
     let errorMessage = document.querySelector(".error_message")
 
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    // recommandations de format des docs
+    // format des docs
     const formatDocument = ['jpg', 'jpeg', 'png']
     console.log(file)
     
