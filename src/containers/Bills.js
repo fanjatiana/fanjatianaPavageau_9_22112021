@@ -28,6 +28,7 @@ export default class {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   getBills = () => {
     const userEmail = localStorage.getItem('user') ?
       JSON.parse(localStorage.getItem('user')).email : ""
@@ -53,6 +54,9 @@ export default class {
                 date: doc.data().date,
                 status: formatStatus(doc.data().status)
               }
+   
+   
+   
             }
           })
           .filter(bill => bill.email === userEmail)
