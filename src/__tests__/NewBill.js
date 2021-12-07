@@ -3,6 +3,8 @@ import NewBillUI from "../views/NewBillUI.js";
 import NewBill from "../containers/NewBill.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
 import { ROUTES } from "../constants/routes.js";
+import firebase from "../__mocks__/firebase.js";
+import BillsUI from "../views/BillsUI.js";
 
 const onNavigate = (pathname) => {
   document.body.innerHTML = ROUTES({ pathname });
@@ -27,9 +29,7 @@ describe("Given I am connected as an employee", () => {
   });
 });
 
-
 describe("When all is valid on NewBill", () => {
- 
   /* on vérifie que la fonction qui permet l'envoie du formulaire a bien été appelée */
   test("Then the submit function handleSubmit should be called", () => {
     const html = NewBillUI();
@@ -151,5 +151,31 @@ describe("When i choose the good format file ", () => {
   });
 });
 
+/* test d'intégration POST */
 
-
+describe("Given, i am connected as Employee", () => {
+  describe("When i post a bill", () => {
+    test("Then number of bills fetched should changed from 4 to 5 ", async () => {
+      const post = jest.spyOn(firebase, "post");
+      const newPost = {
+        id: "qcEZGFSzhthteZAGRrHjaC",
+        status: "refused",
+        pct: 50,
+        amount: 400,
+        email: "monemail@email.com",
+        name: "urgent",
+        vat: "80",
+        fileName: "facture-screenshot.jpg",
+        date: "2009-12-02",
+        commentAdmin: "facture du mois de décembre",
+        commentary: "test post",
+        type: "Restaurants et bars",
+        fileUrl:
+          "https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…dur.png?alt=media&token=571d34cb-9c8f-430a-af52-66221cae1da3",
+      };
+      const newBillList = await firebase.post(newPost);
+      expect(post).toHaveBeenCalledTimes(1);
+      expect(newBillList.data.length).toBe(5);
+    });
+  });
+});
