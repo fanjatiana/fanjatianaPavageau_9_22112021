@@ -23,7 +23,7 @@ describe("Given I am connected as an employee", () => {
     });
 
     /* on vérifie que la fonction qui permet l'envoie du formulaire a bien été appelée */
-    test("Then the submit function handleSubmit should be called", () => {
+   /* test("Then the submit function handleSubmit should be called", () => {
       const html = NewBillUI();
       document.body.innerHTML = html;
       const newBill = new NewBill({
@@ -37,7 +37,7 @@ describe("Given I am connected as an employee", () => {
       formNewBill.addEventListener("submit", handleSubmit);
       fireEvent.submit(formNewBill);
       expect(handleSubmit).toBeCalled();
-    });
+    });*/
 
     /* on vérifie ce qu il se passe en cas d'import de document conforme */
     describe("When i choose the good format file ", () => {
