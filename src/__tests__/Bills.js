@@ -15,7 +15,8 @@ Object.defineProperty(window, "localStorage", { value: localStorageMock });
 window.localStorage.setItem("user", JSON.stringify({ type: "Employee" }));
 
 describe("Given I am connected as an employee", () => {
-  // composant views/Bills : faire passer le taux de couverture à 100%
+  
+  // composant views/Bills : faire passer le taux de couverture à 100% :test du chargement de la page bills
   describe("When I am on Bill page but it is loading", () => {
     test("Then, Loading page should be rendered", () => {
       const html = BillsUI({ loading: true });
@@ -23,6 +24,8 @@ describe("Given I am connected as an employee", () => {
       expect(screen.getAllByText("Loading...")).toBeTruthy();
     });
   });
+
+  // test du message d'erreur si non chargement de la page bills
   describe("When I am on Bill page but error message", () => {
     test("Then, Error page should be rendered", () => {
       const html = BillsUI({ error: "error" });
@@ -36,6 +39,8 @@ describe("Given I am connected as an employee", () => {
       document.body.innerHTML = html;
       //to-do write expect expression
     });
+
+    // test : affichage des notes de frais (recentes -> anciennes)
     test("Then bills should be ordered from earliest to latest", () => {
       const html = BillsUI({ data: bills });
       document.body.innerHTML = html;
@@ -53,7 +58,7 @@ describe("Given I am connected as an employee", () => {
   // composant container/Bills :
   describe("When I click on the new bill button", () => {
     test("Then the click function handleClickNewBill should be called", () => {
-      // affichage de la page Bill en récupérant les data liés aux notes de frais
+      // test de la fonction handleClickNewBill (permet l'affichage du  formulaire de note de frais)
       const html = BillsUI({ data: bills });
       document.body.innerHTML = html;
       const newBill = new Bills({
@@ -71,7 +76,7 @@ describe("Given I am connected as an employee", () => {
   });
   describe("When I click on the eye icon", () => {
     test("Then a modal should be open", () => {
-      // On simule la création d'une modale (dans BillsUI)
+      // test : fonction handleClickIconEye (permet l'affichage de la modale) + ouverture de la modale
       $.fn.modal = jest.fn();
       const html = BillsUI({ data: bills });
       document.body.innerHTML = html;
@@ -102,21 +107,21 @@ describe("Given I am connected as an employee", () => {
       expect(bills.data.length).toBe(4);
     });
     test("fetches bills from an API and fails with 404 message error", async () => {
-      firebase.get.mockImplementationOnce(() =>
+      firebase.get(() =>
         Promise.reject(new Error("Erreur 404"))
       );
       const html = BillsUI({ error: "Erreur 404" });
       document.body.innerHTML = html;
-      const message = await screen.getByText(/Erreur 404/);
+      const message =  screen.getByText(/Erreur 404/);
       expect(message).toBeTruthy();
     });
     test("fetches messages from an API and fails with 500 message error", async () => {
-      firebase.get.mockImplementationOnce(() =>
+      firebase.get(() =>
         Promise.reject(new Error("Erreur 500"))
       );
       const html = BillsUI({ error: "Erreur 500" });
       document.body.innerHTML = html;
-      const message = await screen.getByText(/Erreur 500/);
+      const message = screen.getByText(/Erreur 500/);
       expect(message).toBeTruthy();
     });
   });

@@ -68,6 +68,7 @@ export default {
     })
   },
 
+  // ajout de la méthode post pour l'envoie des notes de frais
   post: async (newBill) => {
     const bills = await firebase.get();
     return Promise.resolve({

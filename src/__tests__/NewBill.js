@@ -22,7 +22,7 @@ describe("Given I am connected as an employee", () => {
       expect(screen.getAllByText("Envoyer une note de frais")).toBeTruthy();
     });
 
-    /* on vérifie que la fonction qui permet l'envoie du formulaire a bien été appelée */
+    // test de la fonction handleSubmit(permet l'envoie du formulaire de note de frais)
     test("Then the submit function handleSubmit should be called", () => {
       const html = NewBillUI();
       document.body.innerHTML = html;
@@ -109,7 +109,7 @@ describe("Given I am connected as an employee", () => {
     });
 
     describe("When all is valid on NewBill", () => {
-      /* on simule un formulaire valide */
+      // on test qu'on retourne bien sur la page bills après l'envoie d'un formulaire valide
       test("then after the bill was created, we should be redirected to Bills page", async () => {
         const html = NewBillUI();
         document.body.innerHTML = html;
@@ -150,8 +150,8 @@ describe("Given I am connected as an employee", () => {
       });
     });
   });
+  
   /* test d'intégration POST */
-
   describe("Given, i am connected as Employee", () => {
     describe("When i post a bill", () => {
       test("Then number of bills fetched should changed from 4 to 5 ", async () => {
